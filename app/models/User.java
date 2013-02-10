@@ -4,6 +4,8 @@ import javax.validation.*;
 
 import play.data.validation.Constraints.*;
 
+import controllers.MorphiaObject;
+
 public class User {
     
     @Required
@@ -49,5 +51,9 @@ public class User {
         }
         
     }
+    
+    public static void create(User user) {
+		MorphiaObject.datastore.save(user);
+	}
     
 }
