@@ -1,7 +1,15 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.*;
 
+import org.bson.types.ObjectId;
+
+import controllers.MorphiaObject;
+
+import play.Logger;
 import play.data.validation.Constraints.*;
 
 public class User {
@@ -49,5 +57,32 @@ public class User {
         }
         
     }
+    
+    public static List<User> all() {
+		if (MorphiaObject.datastore != null) {
+			return MorphiaObject.datastore.find(User.class).asList();
+		} else {
+			return new ArrayList<User>();
+		}
+	}
+
+	public static void create(User user) {
+		MorphiaObject.datastore.save(user);
+	}
+	
+	public static void delete(String idToDelete) {
+		User toDelete = MorphiaObject.datastore.find(User.class).field("_id").equal(new ObjectId(idToDelete)).get();
+		if (toDelete != null) {
+			Logger.info("toDelete: " + toDelete);
+			MorphiaObject.datastore.delete(toDelete);
+		} else {
+			Logger.debug("ID No Found: " + idToDelete);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return username;
+	}
     
 }

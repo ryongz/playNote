@@ -62,8 +62,22 @@ public class SignUp extends Controller {
             return badRequest(form.render(filledForm));
         } else {
             User created = filledForm.get();
+            
+            //저장
+            User.create(filledForm.get());
             return ok(summary.render(created));
         }
     }
-  
+    
+    /*mongodb*/
+    
+    public static Result user() {
+		return ok(form.render(signupForm));
+	}
+    
+    public static Result deleteUser(String username) {
+		User.delete(username);
+		return redirect(routes.SignUp.edit());
+	}
+    
 }
