@@ -6,8 +6,8 @@ object ApplicationBuild extends Build {
 
     val appName         = "myApp"
     val appVersion      = "1.0-SNAPSHOT"
-	
-	val appDependencies = Seq(
+
+    val appDependencies = Seq(
     		// Add your project dependencies here,
     		"com.google.code.morphia" % "morphia" % "0.99",
     		"org.mongodb" % "mongo-java-driver" % "2.7.3",
@@ -19,5 +19,4 @@ object ApplicationBuild extends Build {
     		resolvers += "Maven repository" at "http://morphia.googlecode.com/svn/mavenrepo/",
     		resolvers += "MongoDb Java Driver Repository" at "http://repo1.maven.org/maven2/org/mongodb/mongo-java-driver/"
     )
-    
 }
