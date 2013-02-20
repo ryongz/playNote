@@ -1,126 +1,83 @@
-@(contactForm: Form[Contact])
+@(contactForm: Form[Contact]) @import helper._ @import
+helper.twitterBootstrap._ @title = { Add a new contact
+<small><a href="@routes.Contacts.edit">Or edit an existing
+		contact</a></small>
+} @phoneField(field: Field, className: String = "phone") = {
+@input(field, '_label -> "Phone numbers", '_class -> className) { (id,
+name, value, _) =>
+<input type="text" name="@name" value="@value">
+<a class="removePhone btn danger">Remove</a>
+} } @informationGroup(field: Field, className: String = "profile") = {
+<div class="twipsies well @className">
 
-@import helper._
-@import helper.twitterBootstrap._
+	<a class="removeProfile btn danger pull-right">Remove this profile</a>
 
-@title = {
-    Add a new contact <small><a href="@routes.Contacts.edit">Or edit an existing contact</a></small>
+	@inputText( field("label"), '_label -> "Label" ) @inputText(
+	field("email"), '_label -> "Email" )
+
+	<div class="phones">
+
+		@repeat(field("phones"), min = 0) { phone =>
+
+		@phoneField(phone("number")) } @** * Keep an hidden block that will be
+		used as template for Javascript copy code **@ @phoneField(
+		field("phones[x].number"), className = "phone_template" )
+
+		<div class="clearfix">
+			<div class="input">
+				<a class="addPhone btn success">Add a phone number</a>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+} @main(title, nav = "contact") { @if(contactForm.hasErrors) {
+<div class="alert-message error">
+	<p>
+		<strong>Oops</strong> Please fix all errors
+	</p>
+</div>
+} @helper.form(action = routes.Contacts.submit, 'id -> "form") {
+
+<fieldset>
+	<legend>General informations</legend>
+
+	@inputText( contactForm("firstname"), '_label -> "First name" )
+
+	@inputText( contactForm("lastname"), '_label -> "Last name" )
+
+	@inputText( contactForm("company"), '_label -> "Company" )
+
+</fieldset>
+
+<fieldset>
+	<legend>Profiles</legend>
+
+	<div id="profiles">
+
+		@repeat(contactForm("informations")) { information =>
+
+		@informationGroup(information) } @** * Keep an hidden block that will
+		be used as template for Javascript copy code **@ @informationGroup(
+		contactForm("informations[x]"), className = "profile_template" )
+
+		<div class="manage">
+			<a class="addProfile btn success">Add another profile</a>
+		</div>
+
+	</div>
+
+</fieldset>
+
+<div class="actions">
+	<input type="submit" class="btn primary" value="Insert"> <a
+		href="@routes.Application.index" class="btn">Cancel</a>
+</div>
+
 }
 
-@phoneField(field: Field, className: String = "phone") = {
-    @input(field, '_label -> "Phone numbers", '_class -> className) { (id, name, value, _) =>
-        <input type="text" name="@name" value="@value"> 
-        <a class="removePhone btn danger">Remove</a>
-    }
-}
-
-@informationGroup(field: Field, className: String = "profile") = {
-    <div class="twipsies well @className">
-        
-        <a class="removeProfile btn danger pull-right">Remove this profile</a>
-
-        @inputText(
-            field("label"), 
-            '_label -> "Label"
-        )
-
-        @inputText(
-            field("email"), 
-            '_label -> "Email"
-        )
-        
-        <div class="phones">
-
-            @repeat(field("phones"), min = 0) { phone =>
-                
-                @phoneField(phone("number"))
-    
-            }
-            
-            @**
-             * Keep an hidden block that will be used as template for Javascript copy code
-             **@
-            @phoneField(
-                field("phones[x].number"),
-                className = "phone_template"
-            )
-            
-            <div class="clearfix">
-                <div class="input">
-                    <a class="addPhone btn success">Add a phone number</a>
-                </div>
-            </div>
-        
-        </div>
-
-    </div>
-}
-
-@main(title, nav = "contact") {
-    
-    @if(contactForm.hasErrors) {
-        <div class="alert-message error">
-            <p><strong>Oops</strong> Please fix all errors</p>
-        </div>
-    }
-    
-    @helper.form(action = routes.Contacts.submit, 'id -> "form") {
-        
-        <fieldset>
-            <legend>General informations</legend>
-            
-            @inputText(
-                contactForm("firstname"), 
-                '_label -> "First name"
-            )
-            
-            @inputText(
-                contactForm("lastname"), 
-                '_label -> "Last name"
-            )
-            
-            @inputText(
-                contactForm("company"), 
-                '_label -> "Company"
-            )
-            
-        </fieldset>
-        
-        <fieldset>
-            <legend>Profiles</legend>
-            
-            <div id="profiles">
-            
-                @repeat(contactForm("informations")) { information =>
-                
-                    @informationGroup(information)
-                
-                }
-                
-                @**
-                 * Keep an hidden block that will be used as template for Javascript copy code
-                 **@
-                @informationGroup(
-                    contactForm("informations[x]"),
-                    className = "profile_template"
-                )
-                
-                <div class="manage">
-                    <a class="addProfile btn success">Add another profile</a>
-                </div>
-            
-            </div>
-            
-        </fieldset>
-        
-        <div class="actions">
-            <input type="submit" class="btn primary" value="Insert">
-            <a href="@routes.Application.index" class="btn">Cancel</a>
-        </div>
-        
-    }
-    
-    <script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
         
         $('.removeProfile').live('click', function(e) {
             $(this).parents('.profile').remove()
@@ -175,5 +132,5 @@
         }
         
     </script>
-    
+
 }

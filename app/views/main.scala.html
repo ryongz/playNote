@@ -2,55 +2,76 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="ko">
     <head>
-        <title>Form samples</title>
+    	<meta charset="utf-8">
+    	<title>Play note</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+        
+        <!-- Stylesheet -->
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <!-- <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"> -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/docs.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        
+        <!-- Script -->
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+        
     </head>
     <body>
-        
-        <div class="topbar">
-            <div class="fill">
-                <div class="container">
-                    <a class="brand" href="@routes.Application.index()">Forms</a>
-                    <ul class="nav">
-                        <li class="@("active".when(nav == "signup"))">
-                            <a href="@routes.SignUp.blank()">Sign up</a>
-                        </li>
-                        <li class="@("active".when(nav == "contact"))">
-                            <a href="@routes.Contacts.blank()">Contacts</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-
-            <div class="content">
-                
-                <div class="page-header">
-                    <h1>@title</h1>
-                </div>
-
-                <div class="row">
-                    <div class="span14">
-                        @content
-                    </div>
-                </div>
-                
-            </div>
-
-            <footer>
-                <p>
-                    <a href="http://www.playframework.org">www.playframework.org</a>
-                </p>
-            </footer>
-
-        </div>
-        
+        <div class="wrapper">
+	        <!-- Navication -->
+	        <div class="navbar navbar-inverse navbar-fixed-top">
+	            <div class="navbar-inner">
+	                <div class="container">
+	                    <div class="nav-collapse collapse">
+		                    <ul class="nav" >
+		                    	<li class="@("active".when(nav == "home"))">
+		                            <a href="@routes.Application.index()">Home</a>
+		                        </li>
+		                        <li class="@("active".when(nav == "manage"))">
+		                        	<a href="@routes.AppManage.blank()">Manage</a>
+		                        </li>
+		                    </ul>
+		                </div>
+	                </div>
+	            </div>
+	        </div>
+			
+			<!-- Contents -->
+	        <div class="container">
+	            <div class="content">
+	                <div class="page-header">
+	                    @title
+	                </div>
+	                <div class="row">
+	                	<br>
+	                    <div class="span14">
+	                        @content
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        
+		    <div class="push"></div>
+		    
+		</div>
+		
+        <footer class="footer">
+	    	<div class="container">
+	    		<p>Create by Jae Ryong Lee.
+		        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>.
+		        <ul class="footer-links">
+			        <li><a href="http://www.facebook.com/ryongz">Facebook</a></li>
+			        <li class="muted">&middot;</li>
+			        <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Github</a></li>
+			        <li class="muted">&middot;</li>
+			        <li><a href="https://github.com/twitter/bootstrap/blob/master/CHANGELOG.md">Changelog</a></li>
+		        </ul>
+	    	</div>
+	    </footer>
+	    
     </body>
 </html>

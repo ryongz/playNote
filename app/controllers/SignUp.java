@@ -1,6 +1,5 @@
 package controllers;
 
-import play.*;
 import play.mvc.*;
 import play.data.*;
 
@@ -62,25 +61,52 @@ public class SignUp extends Controller {
         if(filledForm.hasErrors()) {
             return badRequest(form.render(filledForm));
         } else {
-            User created = filledForm.get();
-            
-            //저장
+            //save
             User.create(filledForm.get());
-            User.create(filledForm.get());
-//            return ok(summary.render(created));
             return ok(form.render(filledForm));
         }
     }
     
-    /*mongodb*/
+    /**
+     * Create user
+     * 
+     * @param username
+     * @return
+     */
+    public static Result newUser() {
+    	
+    	Form<User> filledForm = signupForm.bindFromRequest();
+        
+        //저장
+        User.create(filledForm.get());
+        return ok(form.render(filledForm));
+    }
     
-    public static Result user() {
-		return ok(form.render(signupForm));
-	}
+    /**
+     * Search user
+     * 
+     * @param username
+     * @return
+     */
+    public static Result getUser(String username) {
+    	User user = User.getUser(username);
+    	if(user == null){
+    		return ok(form.render(signupForm));
+    	}else{
+    		return ok(summary.render(user));
+    	}
+    }
     
+    /**
+     * Delete user
+     * 
+     * @param username
+     * @return
+     */
     public static Result deleteUser(String username) {
 		User.delete(username);
-		return redirect(routes.SignUp.edit());
+		//return rediret(form.render(signupForm));
+		return redirect(routes.SignUp.blank());
 	}
     
 }

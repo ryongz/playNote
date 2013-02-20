@@ -16,9 +16,12 @@ GET     /contacts/fakecontact       controllers.Contacts.edit()
 POST    /contacts                   controllers.Contacts.submit()
 
 # User
-GET     /user                     	controllers.SignUp.user()
+GET     /user/:username             controllers.SignUp.getUser(username: String)
 POST    /user                     	controllers.SignUp.newUser()
-POST    /user/:id/delete          	controllers.SignUp.deleteUser(id: String)
+POST    /user/:username/delete      controllers.SignUp.deleteUser(username: String)
+
+# Manage
+GET     /manage                   controllers.AppManage.blank()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
